@@ -8,7 +8,7 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
 // import './boostrap';
-
+import $ from'jquery';
 // start the Stimulus application
 import './bootstrap';
 $alert('je suis le fichier js');
