@@ -40,3 +40,16 @@
     </button>
 </form>
 {% endblock %}
+
+{# En dessous du body, twig incrustera dans l'emplacement de base.html.twig  #}
+{% block javascripts%}
+
+{{parent() }}
+{{encore_entry_script_tags('login') }}
+{% endblock %}
+
+{% block stylesheets%}
+
+{{parent() }}
+{{encore_entry_link_tags('login') }}
+{% endblock %}
