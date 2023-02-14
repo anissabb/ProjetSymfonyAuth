@@ -6,6 +6,8 @@
 <div>
 
 <a href="{{path ('app_logout')}}"> Se déconnecter</a>
+
+    <a href="{{path ('app_register')}}"> S'inscrire</a>
 <h1> Vous êtes dans l'acceuil</h1>
 
 <h4> Bienvenue {{app.user.nom}}</h4>
@@ -15,6 +17,7 @@
     <p>Nom: {{produit.nom|capitalize}}</p>
    <p> Prix: {{produit.prix}}</p>
     <br/>
+
 {% endfor %}
 
 </div>
