@@ -20,7 +20,9 @@ security:
             logout:
                 path: app_logout
                 # where to redirect after logout
-                # target: app_any_route
+                #faire attention  de pas mettre d'espaces
+                # lorsqu'on se deconnecte, on est redirigé vers la page de login
+                target: /login
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

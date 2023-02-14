@@ -3,11 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -29,6 +33,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $nom = null;
+
+    #[ORM\ManyToMany(targetEntity: Produit::class, inversedBy: 'likers')]
+    private Collection $produitsFavoris;
+
+    public function __construct()
+    {
+        $this->produitsFavoris = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -108,6 +120,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNom(?string $nom): self
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Produit>
+     */
+    public function getProduitsFavoris(): Collection
+    {
+        return $this->produitsFavoris;
+    }
+
+    public function addProduitsFavori(Produit $produitsFavori): self
+    {
+        if (!$this->produitsFavoris->contains($produitsFavori)) {
+            $this->produitsFavoris->add($produitsFavori);
+        }
+
+        return $this;
+    }
+
+    public function removeProduitsFavori(Produit $produitsFavori): self
+    {
+        $this->produitsFavoris->removeElement($produitsFavori);
 
         return $this;
     }
